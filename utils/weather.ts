@@ -44,32 +44,32 @@ export function getAQIInfo(aqi: number): AQIInfo {
 
 export function getAQIRecommendations(aqi: number): string[] {
   if (aqi <= 50) {
-    // Good Air Quality
+    // Good Air Quality (AQI 0–50)
     return [
-      '🌞 Soak up some vitamin D',
-      '🏃 Great conditions for a run or bike ride',
-      '🚶 Take your lunch outside',
-      '🏋️ Move your workout outside',
-      '🛝 Visit a playground',
+      '🏃 Perfect day for a run, bike ride, or hike.',
+      '🧺 Enjoy a picnic or lunch outdoors.',
+      '🌞 Open your windows to let in fresh air (if pollen levels are low).',
+      '☕ Meet a friend at an outdoor café or patio.',
+      '🌳 Spend time in nature and soak up the fresh air.',
     ];
   }
   if (aqi <= 100) {
-    // Moderate Air Quality
+    // Moderate Air Quality (AQI 51–100)
     return [
-      '🚶 Enjoy a casual walk instead of an intense workout',
-      '🌬️ Most people can enjoy outdoor activities as usual',
-      '❤️ If you have asthma or other respiratory conditions, pay attention to how you feel',
-      '🛝 Kids can enjoy the playground, but take breaks if they\'re very active',
-      '🎨 Try an indoor creative activity',
+      '🚶 Enjoy a walk or other light outdoor activity.',
+      '💧 If exercising outside, keep the intensity moderate and stay hydrated.',
+      '❤️ If you\'re sensitive to air pollution, consider shortening strenuous outdoor activities.',
+      '☕ Relax outdoors or choose a mix of indoor and outdoor plans.',
+      '📱 Check the air quality later—it may improve or worsen throughout the day.',
     ];
   }
-  // Unhealthy Air Quality
+  // Bad Air Quality (AQI 151+)
   return [
-    '🏠 Limit time outdoors when possible',
-    '🌳 Postpone hikes, long walks, or outdoor sports',
-    '🌬️ Run an air purifier if you have one',
-    '❤️ People with asthma, heart disease, older adults, children, and pregnant individuals should take extra precautions',
-    '🎲 Build a blanket fort or play board games',
+    '🏠 Move workouts and other activities indoors when possible.',
+    '😷 If you need to be outside for an extended period, consider wearing a well-fitting N95 or KN95 mask.',
+    '💨 Keep windows closed and use an air purifier if available.',
+    '🎬 Choose indoor activities like visiting a museum, reading, or watching a movie.',
+    '❤️ Limit prolonged outdoor exposure, especially if you have asthma, heart disease, or other respiratory conditions.',
   ];
 }
 
