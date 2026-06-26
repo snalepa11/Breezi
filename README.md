@@ -44,6 +44,8 @@ Breezi/
 
 ## Getting Started
 
+clone repository to your local machine, install dependencies, and run npm run dev to start local environment.
+
 ### Prerequisites
 
 - Node.js 18+
@@ -52,11 +54,13 @@ Breezi/
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -66,7 +70,9 @@ npm run dev
 ## Key Features Implemented
 
 ### Borough Selection on Map Page
+
 The Map screen now includes horizontal tabs at the top for selecting different NYC boroughs:
+
 - Manhattan (default)
 - Brooklyn
 - Queens
@@ -76,6 +82,7 @@ The Map screen now includes horizontal tabs at the top for selecting different N
 Each borough displays its own ZIP codes with live AQI (Air Quality Index) data.
 
 ### Technologies Used
+
 - **Next.js 14**: React framework with App Router
 - **TypeScript**: Type-safe code
 - **CSS Modules**: Scoped component styling
@@ -84,12 +91,14 @@ Each borough displays its own ZIP codes with live AQI (Air Quality Index) data.
 ## Development
 
 ### Build for Production
+
 ```bash
 npm run build
 npm start
 ```
 
 ### Linting
+
 ```bash
 npm run lint
 ```
@@ -97,6 +106,7 @@ npm run lint
 ## Data Structure
 
 ZIP code data is organized by borough in `data/zipData.ts`. Each entry includes:
+
 - `zip`: ZIP code
 - `name`: Neighborhood name
 - `aqi`: Air Quality Index
