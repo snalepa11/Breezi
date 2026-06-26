@@ -1,0 +1,44 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  background: linear-gradient(160deg, #4f9fe2, #74bff0);
+  padding: 60px 20px 16px;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(60, 120, 180, 0.18);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-right: 8px;
+}
+
+.headerIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerTitle {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.headerSubtitle {
+  font-size: 12.5px;
+  opacity: 0.9;
+}
