@@ -42,6 +42,49 @@ export default function Map({ initialBorough = 'Manhattan' }: MapProps) {
     }
   };
 
+  const getAQIRecommendations = (aqi: number): string[] => {
+    if (aqi <= 50) {
+      return [
+        'Air quality is satisfactory',
+        'Ideal for outdoor activities',
+        'No health precautions needed',
+      ];
+    } else if (aqi <= 100) {
+      return [
+        'Acceptable air quality',
+        'Unusually sensitive people should limit prolonged outdoor exertion',
+        'Everyone else can enjoy outdoor activities',
+      ];
+    } else if (aqi <= 150) {
+      return [
+        'Unhealthy for sensitive groups',
+        'People with respiratory conditions should limit outdoor exertion',
+        'General public should reduce prolonged outdoor activities',
+      ];
+    } else if (aqi <= 200) {
+      return [
+        'Unhealthy air quality',
+        'Everyone should limit prolonged outdoor exertion',
+        'Sensitive groups should avoid outdoor activities',
+        'Consider wearing a mask outdoors',
+      ];
+    } else if (aqi <= 300) {
+      return [
+        'Very unhealthy air quality',
+        'Everyone should avoid prolonged outdoor exertion',
+        'Stay indoors with windows closed',
+        'Use air purifiers if available',
+      ];
+    } else {
+      return [
+        'Hazardous air quality',
+        'Avoid all outdoor activities',
+        'Remain indoors with air filtration',
+        'Seek medical attention if experiencing symptoms',
+      ];
+    }
+  };
+
   const renderMapDetail = () => {
     if (mapError) {
       return (
@@ -54,6 +97,7 @@ export default function Map({ initialBorough = 'Manhattan' }: MapProps) {
 
     const z = currentZips.find((x) => x.zip === selectedZip) || currentZips[0];
     const inf = getAQIInfo(z.aqi);
+    const aqiRecommendations = getAQIRecommendations(z.aqi);
 
     return (
       <div className={styles.detailCard} style={{ borderTop: `4px solid ${inf.bg}` }}>
@@ -74,42 +118,14 @@ export default function Map({ initialBorough = 'Manhattan' }: MapProps) {
         </div>
         <div className={styles.detailPollutant}>Dominant pollutant · {z.pol}</div>
         <div className={styles.detailNote}>{inf.note}</div>
-      </div>
-    );
-  };
-
-  const renderHeatmap = () => {
-    return (
-      <div className={styles.heatmap}>
-        {currentZips.map((z) => {
-          const inf = getAQIInfo(z.aqi);
-          const isSel = z.zip === selectedZip;
-          const txt = z.aqi <= 100 && z.aqi > 50 ? '#5e4a08' : '#fff';
-
-          return (
-            <button
-              key={z.zip}
-              onClick={() => {
-                setSelectedZip(z.zip);
-                setMapError('');
-              }}
-              className={styles.heatmapButton}
-              style={{
-                border: isSel ? '2.5px solid #1c2b39' : '2px solid rgba(255,255,255,.55)',
-                background: inf.bg,
-                boxShadow: isSel ? '0 5px 14px rgba(20,40,60,.28)' : '0 1px 3px rgba(20,60,90,.1)',
-                transform: isSel ? 'scale(1.04)' : 'none',
-              }}
-            >
-              <div className={styles.heatmapZip} style={{ color: txt }}>
-                {z.zip}
-              </div>
-              <div className={styles.heatmapAqi} style={{ color: txt }}>
-                {z.aqi}
-              </div>
-            </button>
-          );
-        })}
+        <ul className={styles.recommendationList}>
+          {aqiRecommendations.map((rec, i) => (
+            <li key={i} className={styles.recommendationItem}>
+              <div className={styles.bulletBox} />
+              <span>{rec}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   };
@@ -178,11 +194,6 @@ export default function Map({ initialBorough = 'Manhattan' }: MapProps) {
             <div className={styles.legendRange}>100+</div>
           </div>
         </div>
-      </div>
-
-      <div className={styles.heatmapContainer}>
-        <div className={styles.heatmapTitle}>Tap a ZIP to see details</div>
-        {renderHeatmap()}
       </div>
     </div>
   );
