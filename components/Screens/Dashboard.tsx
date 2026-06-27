@@ -50,8 +50,8 @@ export default function Dashboard({
           }
         }
 
-        // Fetch AQI data
-        const aqiResponse = await fetch("/api/aqi");
+        // Fetch AQI data from AirNow
+        const aqiResponse = await fetch("/api/airnow?zip=10036");
         if (aqiResponse.ok) {
           const aqiResult = await aqiResponse.json();
           if (aqiResult.success) {

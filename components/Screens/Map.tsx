@@ -45,42 +45,35 @@ export default function Map({ initialBorough = 'Manhattan' }: MapProps) {
   const getAQIRecommendations = (aqi: number): string[] => {
     if (aqi <= 50) {
       return [
-        'Air quality is satisfactory',
-        'Ideal for outdoor activities',
-        'No health precautions needed',
+        'A great day to be active outside.',
       ];
     } else if (aqi <= 100) {
       return [
-        'Acceptable air quality',
-        'Unusually sensitive people should limit prolonged outdoor exertion',
-        'Everyone else can enjoy outdoor activities',
+        'A good day to be active outside.',
+        'Sensitive individuals may experience increased symptoms — follow routine precautions.',
       ];
     } else if (aqi <= 150) {
       return [
-        'Unhealthy for sensitive groups',
-        'People with respiratory conditions should limit outdoor exertion',
-        'General public should reduce prolonged outdoor activities',
+        'Low risk for healthy people.',
+        'If eyes are watering, throat is sore, or you\'re out of breath — take a break indoors.',
+        'Sensitive individuals should avoid strenuous outdoor activity over one hour.',
       ];
     } else if (aqi <= 200) {
       return [
-        'Unhealthy air quality',
-        'Everyone should limit prolonged outdoor exertion',
-        'Sensitive groups should avoid outdoor activities',
-        'Consider wearing a mask outdoors',
+        'All New Yorkers should limit strenuous outdoor activity over one hour.',
+        'Sensitive individuals should avoid unnecessary outdoor activities.',
+        'Consider rescheduling outdoor events lasting more than one hour.',
       ];
     } else if (aqi <= 300) {
       return [
-        'Very unhealthy air quality',
-        'Everyone should avoid prolonged outdoor exertion',
-        'Stay indoors with windows closed',
-        'Use air purifiers if available',
+        'Reschedule or move all unnecessary activities indoors.',
+        'All New Yorkers should avoid strenuous outdoor activity over one hour.',
       ];
     } else {
       return [
-        'Hazardous air quality',
-        'Avoid all outdoor activities',
-        'Remain indoors with air filtration',
-        'Seek medical attention if experiencing symptoms',
+        'All New Yorkers should avoid unnecessary outdoor activities.',
+        'High-quality masks (N95 or KN95) recommended if going outside.',
+        'Monitor NYC alerts and airnow.gov for updates.',
       ];
     }
   };
@@ -188,10 +181,31 @@ export default function Map({ initialBorough = 'Manhattan' }: MapProps) {
           </div>
         </div>
         <div className={styles.legendItem}>
+          <span className={styles.legendColor} style={{ background: '#e86b2f' }} />
+          <div>
+            <div className={styles.legendTitle}>Sensitive</div>
+            <div className={styles.legendRange}>101–150</div>
+          </div>
+        </div>
+        <div className={styles.legendItem}>
           <span className={styles.legendColor} style={{ background: '#e0563b' }} />
           <div>
             <div className={styles.legendTitle}>Unhealthy</div>
-            <div className={styles.legendRange}>100+</div>
+            <div className={styles.legendRange}>151–200</div>
+          </div>
+        </div>
+        <div className={styles.legendItem}>
+          <span className={styles.legendColor} style={{ background: '#8b3fa8' }} />
+          <div>
+            <div className={styles.legendTitle}>Very Unhealthy</div>
+            <div className={styles.legendRange}>201–300</div>
+          </div>
+        </div>
+        <div className={styles.legendItem}>
+          <span className={styles.legendColor} style={{ background: '#7e0023' }} />
+          <div>
+            <div className={styles.legendTitle}>Hazardous</div>
+            <div className={styles.legendRange}>301+</div>
           </div>
         </div>
       </div>
