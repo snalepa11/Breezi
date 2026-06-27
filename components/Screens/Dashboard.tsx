@@ -76,7 +76,7 @@ export default function Dashboard({
   const humidity = weatherData?.humidity;
   const condition = weatherData?.condition;
   const location = weatherData?.location;
-  const currentAQI = aqiData?.aqi;
+  const currentAQI = aqiData?.aqi ?? 64;
   const aqiRecommendations = getAQIRecommendations(currentAQI);
 
   // Get AQI category and color based on index
