@@ -124,6 +124,82 @@
   color: #1c2b39;
 }
 
+.aqiGauge {
+  margin: 16px 0;
+}
+
+.aqiScale {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 60px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.aqiSegment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  color: white;
+  position: relative;
+}
+
+.aqiLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.aqiRange {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.aqiMarkerContainer {
+  position: relative;
+  height: 30px;
+  margin-top: 4px;
+}
+
+.aqiMarker {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.aqiMarkerDot {
+  width: 12px;
+  height: 12px;
+  background: #1c2b39;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  margin-bottom: 4px;
+}
+
+.aqiMarkerLabel {
+  background: #1c2b39;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .recommendationList {
   list-style: none;
   padding: 0;

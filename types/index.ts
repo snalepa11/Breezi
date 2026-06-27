@@ -34,3 +34,14 @@ export interface AQIInfo {
   cat: string;
   note: string;
 }
+
+export interface WeatherData {
+  location: string;
+  temperature: number;
+  feelsLike: number;
+  condition: string;
+  conditionDescription: string;
+  high: number;
+  low: number;
+  humidity: number;
+}
