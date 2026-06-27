@@ -161,6 +161,35 @@
   margin-top: 8px;
 }
 
+.loadingText {
+  text-align: center;
+  font-size: 14px;
+  color: #8aa0b0;
+  padding: 20px;
+}
+
+.liveDataBadge {
+  font-size: 11px;
+  color: #e0563b;
+  background: #fef5f4;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.fallbackDataBadge {
+  font-size: 11px;
+  color: #d68900;
+  background: #fff8e6;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-weight: 600;
+  display: inline-block;
+}
+
 .recommendationList {
   list-style: none;
   padding: 0;
