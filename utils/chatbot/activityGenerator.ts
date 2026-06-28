@@ -25,7 +25,7 @@ export function generateActivitySuggestions(
   const isGoodWeather =
     temperature >= 65 &&
     temperature <= 85 &&
-    ["clear", "clouds"].includes(
+    ["clear", "sunny", "clouds"].includes(
       condition.toLowerCase()
     );
 

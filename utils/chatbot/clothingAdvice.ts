@@ -99,6 +99,7 @@ export function getClothingAdvice(
       break;
 
     case "clear":
+    case "sunny":
       accessory.push(
         "Sunscreen"
       );

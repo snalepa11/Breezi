@@ -98,7 +98,9 @@ export function generateChatResponse({
 }: GenerateResponseOptions): ChatResponse {
   const intent = detectIntent(message);
 
-  const handler = handlers[intent];
+  const handler = 
+    handlers[intent] ??
+    handlers.general;
 
   return {
     intent,

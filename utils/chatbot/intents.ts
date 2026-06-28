@@ -114,9 +114,17 @@ const INTENT_KEYWORDS: Record<Intent, string[]> = {
  */
 export function detectIntent(message: string): Intent {
   const normalized = message.toLowerCase().trim();
+  const words = normalized.split(/\s+/);
 
   for (const [intent, keywords] of Object.entries(INTENT_KEYWORDS)) {
-    if (keywords.some((keyword) => normalized.includes(keyword))) {
+    if (
+      keywords.some((keyword) => {
+        if (keyword.includes(" ")) {
+          return normalized.includes(keyword);
+        }
+        return words.includes(keyword);
+      })
+    ) {
       return intent as Intent;
     }
   }

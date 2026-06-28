@@ -63,6 +63,7 @@ export function getWeatherAdvice(
       break;
 
     case "clear":
+    case "sunny":
       caution =
         "Clear skies make it a great day outdoors. Consider sunscreen if you'll be outside for long periods.";
       break;
