@@ -350,27 +350,7 @@ export default function Map({ initialBorough = "Manhattan" }: MapProps) {
           />
           <div>
             <div className={styles.legendTitle}>Unhealthy</div>
-            <div className={styles.legendRange}>151–200</div>
-          </div>
-        </div>
-        <div className={styles.legendItem}>
-          <span
-            className={styles.legendColor}
-            style={{ background: "#8b3fa8" }}
-          />
-          <div>
-            <div className={styles.legendTitle}>Very Unhealthy</div>
-            <div className={styles.legendRange}>201–300</div>
-          </div>
-        </div>
-        <div className={styles.legendItem}>
-          <span
-            className={styles.legendColor}
-            style={{ background: "#7e0023" }}
-          />
-          <div>
-            <div className={styles.legendTitle}>Hazardous</div>
-            <div className={styles.legendRange}>301+</div>
+            <div className={styles.legendRange}>151–200+</div>
           </div>
         </div>
       </div>

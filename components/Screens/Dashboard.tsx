@@ -22,6 +22,8 @@ interface WeatherData {
   low: number;
   humidity: number;
   location: string;
+  rainChance: number;
+  hourlyForecast?: HourlyData[];
 }
 
 interface AQIData {
@@ -76,8 +78,18 @@ export default function Dashboard({
   const humidity = weatherData?.humidity;
   const condition = weatherData?.condition;
   const location = weatherData?.location;
+  const rainChance = weatherData?.rainChance ?? 20;
   const currentAQI = aqiData?.aqi ?? 64;
   const aqiRecommendations = getAQIRecommendations(currentAQI);
+
+  // Use API hourly forecast if available, otherwise use generated data
+  // API returns 6 data points (now + 5 periods in 3-hour intervals)
+  const hourlyData = weatherData?.hourlyForecast && weatherData.hourlyForecast.length > 0
+    ? weatherData.hourlyForecast
+    : hourly.slice(0, 6);
+
+  // Rain chart shows only first 3 periods (Now, +3hrs, +6hrs)
+  const rainChartData = hourlyData.slice(0, 3);
 
   // Get AQI category and color based on index
   const getAQIInfo = (aqi: number) => {
@@ -136,7 +148,7 @@ export default function Dashboard({
         <div className={styles.stat}>
           <div className={styles.statLabel}>Rain</div>
           <div className={styles.statValue} style={{ color: "#2f93dd" }}>
-            20%
+            {rainChance}%
           </div>
         </div>
         <div className={styles.stat}>
@@ -197,14 +209,19 @@ export default function Dashboard({
       <div className={styles.section}>
         <div className={styles.sectionHeader}>
           <span className={styles.sectionTitle}>Rain chance today</span>
-          <span className={styles.sectionPeak}>Peak 70% · 7 PM</span>
+          <span className={styles.sectionPeak}>
+            {rainChartData.length > 0 && (() => {
+              const peak = rainChartData.reduce((max, curr) => curr.rain > max.rain ? curr : max);
+              return `Peak ${peak.rain}% · ${peak.label}`;
+            })()}
+          </span>
         </div>
-        <RainChart hourly={hourly} />
+        <RainChart hourly={rainChartData} />
       </div>
 
       <div className={styles.section}>
         <div className={styles.sectionTitle}>Next hours</div>
-        <HourlyStrip hourly={hourly} />
+        <HourlyStrip hourly={hourlyData} />
       </div>
 
       <div className={styles.compareLink} onClick={onNavigateToCompare}>

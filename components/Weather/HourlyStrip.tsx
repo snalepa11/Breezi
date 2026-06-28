@@ -11,7 +11,7 @@ export default function HourlyStrip({ hourly }: HourlyStripProps) {
   return (
     <div className={styles.container}>
       <div className={styles.strip}>
-        {hourly.slice(0, 13).map((data, i) => (
+        {hourly.map((data, i) => (
           <div key={i} className={styles.item}>
             <div className={styles.label}>{data.label}</div>
             <WeatherIcon rain={data.rain} size={24} />
