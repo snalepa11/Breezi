@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Borough } from "@/types";
-import { zipsByBorough } from "@/data/zipData";
+import { zipsByBorough, allZips } from "@/data/zipData";
 import { getAQIInfo } from "@/utils/weather";
 import Header from "../Layout/Header";
 import styles from "./Map.module.css";
@@ -165,6 +165,10 @@ export default function Map({ initialBorough = "Manhattan" }: MapProps) {
       const inf = getAQIInfo(liveAQIData.aqi);
       const aqiRecommendations = getAQIRecommendations(liveAQIData.aqi);
 
+      // Look up neighborhood name from zipData
+      const zipInfo = allZips.find((z) => z.zip === selectedZip);
+      const neighborhoodName = zipInfo?.name || liveAQIData.reportingArea;
+
       return (
         <div
           className={styles.detailCard}
@@ -174,7 +178,7 @@ export default function Map({ initialBorough = "Manhattan" }: MapProps) {
             <div>
               <div className={styles.detailZip}>ZIP {selectedZip}</div>
               <div className={styles.detailName}>
-                {liveAQIData.reportingArea}
+                {neighborhoodName}
               </div>
             </div>
             <div className={styles.detailAqi}>
