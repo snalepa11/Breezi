@@ -3,7 +3,10 @@ import { HourlyData, AQIInfo } from '@/types';
 export function generateHourlyData(): HourlyData[] {
   const temps = [82, 84, 83, 81, 79, 77, 75, 73, 72, 71, 70, 69, 69, 68, 68, 69, 71, 74, 77, 79, 81, 82, 83, 84];
   const rains = [20, 25, 35, 50, 65, 70, 55, 40, 25, 15, 10, 5, 5, 5, 5, 5, 10, 15, 20, 20, 15, 20, 25, 30];
-  const startH = 14;
+
+  // Get current hour dynamically
+  const now = new Date();
+  const startH = now.getHours();
 
   return temps.map((t, i) => {
     const h = (startH + i) % 24;

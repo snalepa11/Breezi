@@ -9,6 +9,7 @@ interface WeatherData {
   high: number;
   low: number;
   humidity: number;
+  rainChance: number;
 }
 
 interface AQIData {
@@ -42,8 +43,8 @@ export default function Compare() {
           }
         }
 
-        // Fetch AQI data
-        const aqiResponse = await fetch('/api/aqi');
+        // Fetch AQI data from AirNow
+        const aqiResponse = await fetch('/api/aqi/airnow?zip=10036');
         if (aqiResponse.ok) {
           const aqiResult = await aqiResponse.json();
           if (aqiResult.success) {
@@ -62,20 +63,18 @@ export default function Compare() {
   const todayHigh = weatherData?.high ?? 84;
   const todayHumidity = weatherData?.humidity ?? 61;
   const todayAQI = aqiData?.aqi ?? 64;
+  const todayRain = weatherData?.rainChance ?? 20;
 
   // Normal values (30-year average)
   const normalHigh = 81;
   const normalHumidity = 65;
   const normalAQI = 49;
+  const normalRain = 30;
 
   // Calculate differences
   const tempDiff = todayHigh - normalHigh;
   const humidityDiff = todayHumidity - normalHumidity;
   const aqiDiff = todayAQI - normalAQI;
-
-  // Rain chance - static for now (would need additional API endpoint)
-  const todayRain = 20;
-  const normalRain = 30;
   const rainDiff = todayRain - normalRain;
 
   return (
