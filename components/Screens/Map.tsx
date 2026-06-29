@@ -177,9 +177,7 @@ export default function Map({ initialBorough = "Manhattan" }: MapProps) {
           <div className={styles.detailHeader}>
             <div>
               <div className={styles.detailZip}>ZIP {selectedZip}</div>
-              <div className={styles.detailName}>
-                {neighborhoodName}
-              </div>
+              <div className={styles.detailName}>{neighborhoodName}</div>
             </div>
             <div className={styles.detailAqi}>
               <div className={styles.detailAqiValue} style={{ color: inf.bg }}>
@@ -277,7 +275,9 @@ export default function Map({ initialBorough = "Manhattan" }: MapProps) {
             onClick={() => {
               setSelectedBorough(borough);
               setMapError("");
-              setSelectedZip(zipsByBorough[borough][0].zip);
+              const newZip = zipsByBorough[borough][0].zip;
+              setSelectedZip(newZip);
+              fetchLiveAQI(newZip);
             }}
             className={`${styles.boroughTab} ${selectedBorough === borough ? styles.boroughTabActive : ""}`}
           >
