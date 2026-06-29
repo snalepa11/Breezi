@@ -84,9 +84,10 @@ export default function Dashboard({
 
   // Use API hourly forecast if available, otherwise use generated data
   // API returns 6 data points (now + 5 periods in 3-hour intervals)
-  const hourlyData = weatherData?.hourlyForecast && weatherData.hourlyForecast.length > 0
-    ? weatherData.hourlyForecast
-    : hourly.slice(0, 6);
+  const hourlyData =
+    weatherData?.hourlyForecast && weatherData.hourlyForecast.length > 0
+      ? weatherData.hourlyForecast
+      : hourly.slice(0, 6);
 
   // Rain chart shows only first 3 periods (Now, +3hrs, +6hrs)
   const rainChartData = hourlyData.slice(0, 3);
@@ -210,10 +211,13 @@ export default function Dashboard({
         <div className={styles.sectionHeader}>
           <span className={styles.sectionTitle}>Rain chance today</span>
           <span className={styles.sectionPeak}>
-            {rainChartData.length > 0 && (() => {
-              const peak = rainChartData.reduce((max, curr) => curr.rain > max.rain ? curr : max);
-              return `Peak ${peak.rain}% · ${peak.label}`;
-            })()}
+            {rainChartData.length > 0 &&
+              (() => {
+                const peak = rainChartData.reduce((max, curr) =>
+                  curr.rain > max.rain ? curr : max,
+                );
+                return `Peak ${peak.rain}% · ${peak.label}`;
+              })()}
           </span>
         </div>
         <RainChart hourly={rainChartData} />
