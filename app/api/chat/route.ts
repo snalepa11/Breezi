@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { generateChatResponse } from "@/utils/chatbot/responseGenerator";
+import { mapWeatherData } from "@/utils/chatbot/mapWeather";
 
 
 export async function POST(req: Request) {
@@ -20,6 +22,12 @@ export async function POST(req: Request) {
     const weatherData = weatherRes.ok ? await weatherRes.json() : { error: "Weather data currently unavailable" };
     const airQualityData = airNowRes.ok ? await airNowRes.json() : { error: "Air quality data currently unavailable" };
     const locationContextData = foursquareRes.ok ? await foursquareRes.json() : { error: "Location context data currently unavailable" };
+    const weather = mapWeatherData(weatherData);
+
+    const aqi =
+      Array.isArray(airQualityData) && airQualityData.length > 0
+        ? airQualityData[0].AQI
+        : 50;
 
     // 3. Assemble the prompt cleanly
     const systemPrompt = `
@@ -51,48 +59,28 @@ export async function POST(req: Request) {
 
     // 5. Explicit Rate-Limit & Error Check
     if (!geminiRes.ok) {
-      console.error("GEMINI API ERROR:", JSON.stringify(geminiData, null, 2));
-      
-      
-      if (geminiRes.status === 429) {
-  const condition =
-    weatherData?.weather?.[0]?.description ?? "current conditions";
+  console.error("GEMINI API ERROR:", JSON.stringify(geminiData, null, 2));
 
-  const temp =
-    weatherData?.main?.temp != null
-      ? `${Math.round(weatherData.main.temp)}°C`
-      : "an unknown temperature";
+  if (geminiRes.status === 429) {
+    const fallback = generateChatResponse({
+      message: query,
+      weather,
+      aqi,
+    });
 
-  const aqi =
-    Array.isArray(airQualityData) && airQualityData.length > 0
-      ? airQualityData[0].AQI
-      : null;
-
-  let airMessage = "";
-
-  if (aqi !== null) {
-    if (aqi <= 50) {
-      airMessage = "Air quality is good today.";
-    } else if (aqi <= 100) {
-      airMessage = "Air quality is moderate.";
-    } else {
-      airMessage = "Air quality is unhealthy for sensitive groups, so consider limiting prolonged outdoor activity.";
-    }
+    return NextResponse.json({
+      reply: fallback.reply,
+    });
   }
 
-  const fallbackReply = `Right now the weather is ${condition} with a temperature of ${temp}. ${airMessage} Based on today's conditions, dress comfortably, stay hydrated, and check local conditions before spending extended time outdoors.`;
-
-  return NextResponse.json({
-    reply: fallbackReply
-  });
+  return NextResponse.json(
+    { reply: "Gemini API rejected the request. Check your server logs." },
+    { status: 500 }
+  );
 }
 
-return NextResponse.json({
-  reply: "I'm temporarily unable to generate an AI response, but weather data is still available."
-});
-      
-      return NextResponse.json({ reply: "Gemini API rejected the request. Check your server logs." }, { status: 500 });
-    }
+
+
 
     // 6. Safe Extraction
     const finalAdvice = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -101,10 +89,18 @@ return NextResponse.json({
       throw new Error("Invalid response format received from Gemini.");
     }
 
-    return NextResponse.json({ reply: finalAdvice });
+   return NextResponse.json({ reply: finalAdvice });
 
-  } catch (error) {
-    console.error("PIPELINE CRITICAL FAILURE:", error);
-    return NextResponse.json({ reply: "An internal backend error occurred while compiling your request." }, { status: 500 });
-  }
+} catch (error) {
+  console.error("PIPELINE CRITICAL FAILURE:", error);
+
+  return NextResponse.json(
+    {
+      reply: "An internal backend error occurred while compiling your request."
+    },
+    {
+      status: 500
+    }
+  );
+}
 }

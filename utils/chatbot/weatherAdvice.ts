@@ -24,23 +24,24 @@ export function getWeatherAdvice(
   let caution = "";
 
   // Temperature advice
-  if (temperature >= 85) {
-    summary = "It's very warm outside.";
-    recommendation =
-      "Stay hydrated and try to avoid strenuous outdoor activities during peak afternoon hours.";
-  } else if (temperature >= 70) {
-    summary = "The temperature is comfortable.";
-    recommendation =
-      "It's an excellent day for outdoor activities like walking, running, or visiting a park.";
-  } else if (temperature >= 55) {
-    summary = "The weather is cool.";
-    recommendation =
-      "A light jacket may be helpful if you'll be outside for an extended period.";
-  } else {
-    summary = "It's quite cold outside.";
-    recommendation =
-      "Wear warm clothing and limit prolonged exposure to the cold.";
-  }
+  // Temperature advice (Celsius)
+if (temperature >= 30) {
+  summary = "It's very hot outside.";
+  recommendation =
+    "Stay hydrated, wear light clothing, and avoid prolonged outdoor activities during the hottest part of the day.";
+} else if (temperature >= 20) {
+  summary = "The weather is warm and comfortable.";
+  recommendation =
+    "It's a great day for outdoor activities.";
+} else if (temperature >= 10) {
+  summary = "The weather is cool.";
+  recommendation =
+    "A light jacket is recommended if you'll be outside.";
+} else {
+  summary = "It's quite cold outside.";
+  recommendation =
+    "Wear warm clothing and limit prolonged exposure to the cold.";
+}
 
   // Weather condition advice
   switch (condition.toLowerCase()) {

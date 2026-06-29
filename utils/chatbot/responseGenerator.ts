@@ -23,17 +23,18 @@ const handlers: Record<Intent, IntentHandler> = {
     "Hello! I'm Breezi, your weather and air quality assistant. Ask me about today's weather, air quality, clothing recommendations, or outdoor activities.",
 
   weather: (weather) => {
-    const advice = getWeatherAdvice(weather);
+  const advice = getWeatherAdvice(weather);
 
-    return `${advice.summary} ${advice.recommendation}${
-      advice.caution ? ` ${advice.caution}` : ""
-    }`;
+  return `Right now in ${weather.location}, it is ${weather.temperature}°C with ${weather.conditionDescription}. It feels like ${weather.feelsLike}°C. Today's high is ${weather.high}°C and the low is ${weather.low}°C. ${advice.recommendation}${
+    advice.caution ? ` ${advice.caution}` : ""
+  }`;
+  
   },
 
   forecast: (weather) => {
-    const advice = getWeatherAdvice(weather);
+  const advice = getWeatherAdvice(weather);
 
-    return `Current conditions: ${weather.condition}. ${advice.recommendation}`;
+  return `Today's forecast for ${weather.location}: ${weather.conditionDescription}. Current temperature is ${weather.temperature}°C, feels like ${weather.feelsLike}°C, with a high of ${weather.high}°C and a low of ${weather.low}°C. ${advice.recommendation}`;
   },
 
   rain: (weather) => {
@@ -84,8 +85,8 @@ const handlers: Record<Intent, IntentHandler> = {
   borough: () =>
     "Borough-specific air quality recommendations will be available once location-aware data is connected.",
 
-  general: () =>
-    "I'm here to help with weather, air quality, clothing recommendations, forecasts, and outdoor activity suggestions.",
+  general: (weather) =>
+  `I'm here to help! Right now in ${weather.location}, it's ${weather.temperature}°C with ${weather.conditionDescription}. Ask me about the weather, forecast, air quality, clothing recommendations, or outdoor activities.`,
 };
 
 /**
