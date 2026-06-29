@@ -38,13 +38,25 @@ export default function Chat() {
 
     try {
       // Simulate AI response (in real app, would call API)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const simulatedResponse =
-        "I'm a demo weather assistant. In production, I'd provide helpful weather advice based on current conditions!";
-      setMessages([
-        ...newMessages,
-        { role: "assistant", content: simulatedResponse },
-      ]);
+       const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: q,
+    }),
+  });
+
+  const data = await response.json();
+
+  setMessages([
+    ...newMessages,
+    {
+      role: "assistant",
+      content: data.reply,
+    },
+  ]);
     } catch (e) {
       setMessages([
         ...newMessages,
@@ -80,7 +92,7 @@ export default function Chat() {
         "Would you like activity suggestions based on your local weather outlook?",
       onClick: () =>
         ask(
-          "WWould you like activity suggestions based on your local weather outlook?",
+          "Would you like activity suggestions based on your local weather outlook?",
         ),
     },
     {

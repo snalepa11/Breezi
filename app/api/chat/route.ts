@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+
 export async function POST(req: Request) {
   try {
     const { query } = await req.json();
@@ -51,6 +52,7 @@ export async function POST(req: Request) {
     // 5. Explicit Rate-Limit & Error Check
     if (!geminiRes.ok) {
       console.error("GEMINI API ERROR:", JSON.stringify(geminiData, null, 2));
+      
       
       if (geminiRes.status === 429) {
         return NextResponse.json({ 
