@@ -55,10 +55,41 @@ export async function POST(req: Request) {
       
       
       if (geminiRes.status === 429) {
-        return NextResponse.json({ 
-          reply: "I am currently receiving too many requests. Please wait a minute before asking again!" 
-        }, { status: 429 });
-      }
+  const condition =
+    weatherData?.weather?.[0]?.description ?? "current conditions";
+
+  const temp =
+    weatherData?.main?.temp != null
+      ? `${Math.round(weatherData.main.temp)}°C`
+      : "an unknown temperature";
+
+  const aqi =
+    Array.isArray(airQualityData) && airQualityData.length > 0
+      ? airQualityData[0].AQI
+      : null;
+
+  let airMessage = "";
+
+  if (aqi !== null) {
+    if (aqi <= 50) {
+      airMessage = "Air quality is good today.";
+    } else if (aqi <= 100) {
+      airMessage = "Air quality is moderate.";
+    } else {
+      airMessage = "Air quality is unhealthy for sensitive groups, so consider limiting prolonged outdoor activity.";
+    }
+  }
+
+  const fallbackReply = `Right now the weather is ${condition} with a temperature of ${temp}. ${airMessage} Based on today's conditions, dress comfortably, stay hydrated, and check local conditions before spending extended time outdoors.`;
+
+  return NextResponse.json({
+    reply: fallbackReply
+  });
+}
+
+return NextResponse.json({
+  reply: "I'm temporarily unable to generate an AI response, but weather data is still available."
+});
       
       return NextResponse.json({ reply: "Gemini API rejected the request. Check your server logs." }, { status: 500 });
     }
